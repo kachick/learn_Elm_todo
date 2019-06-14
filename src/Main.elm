@@ -24,7 +24,7 @@ init =
 
 
 type Msg
-    = Input String | Submit
+    = Input String | Submit | Delete Int
 
 update : Msg -> Model -> Model
 update msg model =
@@ -35,6 +35,9 @@ update msg model =
         Submit ->
             { model | input = "", memos = model.input :: model.memos }
 
+        Delete number ->
+            { model | memos =  removeFromList number model.memos }
+
 view : Model -> Html Msg
 view model =
     div []
@@ -44,9 +47,13 @@ view model =
                 [ disabled (String.isEmpty (String.trim model.input)) ]
                 [ text "Submit :)" ]
             ]
-        , ul [] (List.map viewMemo model.memos)
+        , ul [] (List.indexedMap viewMemo model.memos)
         ]
 
-viewMemo : String -> Html Msg
-viewMemo memo = 
-    li [] [ text memo ]
+viewMemo : Int -> String -> Html Msg
+viewMemo index memo = 
+    li [] [ text memo, button [ onClick (Delete index) ] [text "Delete"] ]
+
+-- https://stackoverflow.com/questions/33099945/how-to-remove-an-item-at-a-given-index-from-array-list-in-elm/33101419
+removeFromList i xs =
+  (List.take i xs) ++ (List.drop (i+1) xs) 
