@@ -6,7 +6,6 @@ on:
       - 'src/**'
       - 'elm.json'
       - '.github/workflows/deploy.yml'
-      - 'elm-stuff/**'
 jobs:
   build:
     runs-on: ubuntu-latest
