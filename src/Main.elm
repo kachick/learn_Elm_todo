@@ -45,7 +45,7 @@ view model =
             [ input [ value model.input, onInput Input ] []
             , button
                 [ disabled (String.isEmpty (String.trim model.input)) ]
-                [ text "Submit :)" ]
+                [ text "Add" ]
             ]
         , ul [] (List.indexedMap viewMemo model.memos)
         ]
@@ -55,5 +55,6 @@ viewMemo index memo =
     li [] [ text memo, button [ onClick (Delete index) ] [text "Delete"] ]
 
 -- https://stackoverflow.com/questions/33099945/how-to-remove-an-item-at-a-given-index-from-array-list-in-elm/33101419
+removeFromList : Int -> List a -> List a
 removeFromList i xs =
   (List.take i xs) ++ (List.drop (i+1) xs) 
